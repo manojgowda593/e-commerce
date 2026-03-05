@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Microservices Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .home-container {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        p {
+            font-size: 1.3em;
+            margin-bottom: 50px;
+            opacity: 0.95;
+        }
+
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .nav-button {
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            padding: 40px 30px;
+            border-radius: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .icon {
+            font-size: 3em;
+        }
+
+        .footer {
+            margin-top: 60px;
+            color: white;
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="home-container">
+        <h1>🚀 Django Microservices</h1>
+        <p>Welcome to the Microservices Architecture Dashboard</p>
+        
+        <div class="nav-buttons">
+            <a href="/users/" class="nav-button">
+                <span class="icon">👥</span>
+                <span>Users</span>
+            </a>
+            
+            <a href="/products/" class="nav-button">
+                <span class="icon">📦</span>
+                <span>Products</span>
+            </a>
+            
+            <a href="/orders/" class="nav-button">
+                <span class="icon">🛒</span>
+                <span>Orders</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>3 Independent Microservices | API Gateway Pattern</p>
+        </div>
+    </div>
+</body>
+</html>

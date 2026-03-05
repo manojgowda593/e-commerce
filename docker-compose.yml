@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build: ./api_gateway
+    container_name: api-gateway
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api_gateway:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+      - USER_SERVICE_URL=http://user-service:8001
+      - PRODUCT_SERVICE_URL=http://product-service:8002
+      - ORDER_SERVICE_URL=http://order-service:8003
+    networks:
+      - microservices
+
+  user-service:
+    build: ./user_service
+    container_name: user-service
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./user_service:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - microservices
+
+  product-service:
+    build: ./product_service
+    container_name: product-service
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./product_service:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - microservices
+
+  order-service:
+    build: ./order_service
+    container_name: order-service
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./order_service:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - microservices
+
+  ui-service:
+    build: ./ui_service
+    container_name: ui-service
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./ui_service:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - api-gateway
+      - user-service
+      - product-service
+      - order-service
+    networks:
+      - microservices
+
+networks:
+  microservices:
+    driver: bridge
