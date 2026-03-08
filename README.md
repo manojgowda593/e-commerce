@@ -1,14 +1,14 @@
 # Django Microservices Application
 
-A microservices architecture built with Django featuring 3 independent services and a web UI.
+A microservices architecture built with Django featuring 3 independent services and a web UI, designed for deployment with Emissary (Ambassador) API Gateway in EKS.
 
 ## Architecture
 
-- **API Gateway** (Port 8000) - Routes requests to appropriate services
 - **User Service** (Port 8001) - Manages user data
 - **Product Service** (Port 8002) - Handles product catalog
 - **Order Service** (Port 8003) - Processes orders
 - **UI Service** (Port 8080) - Web interface
+- **Emissary** - API Gateway / Ingress Controller (handles routing)
 
 ## Installation
 
@@ -55,19 +55,16 @@ chmod +x start_all.sh
 
 Or run services individually in separate terminals:
 ```bash
-# Terminal 1 - API Gateway
-cd api_gateway && python3 manage.py runserver 8000
-
-# Terminal 2 - User Service
+# Terminal 1 - User Service
 cd user_service && python3 manage.py runserver 8001
 
-# Terminal 3 - Product Service
+# Terminal 2 - Product Service
 cd product_service && python3 manage.py runserver 8002
 
-# Terminal 4 - Order Service
+# Terminal 3 - Order Service
 cd order_service && python3 manage.py runserver 8003
 
-# Terminal 5 - UI Service
+# Terminal 4 - UI Service
 cd ui_service && python3 manage.py runserver 8080
 ```
 

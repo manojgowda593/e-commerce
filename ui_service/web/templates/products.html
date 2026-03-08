@@ -136,9 +136,9 @@
     </div>
 
     <script>
-        // For local development
-        const API_GATEWAY = window.location.hostname === 'localhost' 
-            ? 'http://localhost:8000/api' 
+        // Emissary will route /api/* to appropriate services
+        const API_BASE = window.location.hostname === 'localhost' 
+            ? 'http://localhost:8002' 
             : `${window.location.protocol}//${window.location.hostname}/api`;
 
         async function loadProducts() {
@@ -146,7 +146,7 @@
             element.innerHTML = '<p class="loading">Loading...</p>';
             
             try {
-                const response = await fetch(`${API_GATEWAY}/product/`);
+                const response = await fetch(`${API_BASE}/product/`);
                 const data = await response.json();
                 element.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
             } catch (error) {

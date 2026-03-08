@@ -16,11 +16,6 @@ Each service has a `.env.example` file:
 ### Method 1: Create ConfigMap from .env file directly
 
 ```bash
-# API Gateway ConfigMap
-kubectl create configmap api-gateway-config \
-  --from-env-file=api_gateway/.env.example \
-  -n your-namespace
-
 # User Service ConfigMap
 kubectl create configmap user-service-config \
   --from-env-file=user_service/.env.example \
@@ -222,7 +217,6 @@ env:
 NAMESPACE="your-namespace"
 
 # Create all ConfigMaps
-kubectl create configmap api-gateway-config --from-env-file=api_gateway/.env.example -n $NAMESPACE
 kubectl create configmap user-service-config --from-env-file=user_service/.env.example -n $NAMESPACE
 kubectl create configmap product-service-config --from-env-file=product_service/.env.example -n $NAMESPACE
 kubectl create configmap order-service-config --from-env-file=order_service/.env.example -n $NAMESPACE

@@ -1,21 +1,6 @@
 version: '3.8'
 
 services:
-  api-gateway:
-    build: ./api_gateway
-    container_name: api-gateway
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./api_gateway:/app
-    environment:
-      - PYTHONUNBUFFERED=1
-      - USER_SERVICE_URL=http://user-service:8001
-      - PRODUCT_SERVICE_URL=http://product-service:8002
-      - ORDER_SERVICE_URL=http://order-service:8003
-    networks:
-      - microservices
-
   user-service:
     build: ./user_service
     container_name: user-service
@@ -62,7 +47,6 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
     depends_on:
-      - api-gateway
       - user-service
       - product-service
       - order-service

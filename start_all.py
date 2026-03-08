@@ -4,7 +4,6 @@ import sys
 import time
 
 services = [
-    {'name': 'API Gateway', 'dir': 'api_gateway', 'port': 8000},
     {'name': 'User Service', 'dir': 'user_service', 'port': 8001},
     {'name': 'Product Service', 'dir': 'product_service', 'port': 8002},
     {'name': 'Order Service', 'dir': 'order_service', 'port': 8003},

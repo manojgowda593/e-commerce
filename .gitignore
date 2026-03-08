@@ -22,17 +22,25 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # Django
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+media/
+staticfiles/
 
-# Environment variables
+# Environment variables - NEVER commit real secrets!
 .env
 .env.local
 .env.*.local
+.env.development
+.env.staging
+.env.production
+*.env
+!.env.example
 
 # IDE
 .vscode/
@@ -40,10 +48,63 @@ db.sqlite3-journal
 *.swp
 *.swo
 *~
+.project
+.pydevproject
+.settings/
 
 # OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
 # Docker
 docker-compose.override.yml
+.dockerignore
+
+# Kubernetes
+*.kubeconfig
+kubeconfig
+.kube/
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Secrets and credentials
+secrets/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+credentials.json
+service-account.json
+
+# Local development
+.local/
+local/
+tmp/
+temp/
+
+# Documentation (exclude all markdown files)
+*.md
+!README.md

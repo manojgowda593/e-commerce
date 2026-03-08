@@ -3,10 +3,6 @@
 echo "🚀 Starting Django microservices..."
 echo ""
 
-# Start API Gateway
-echo "Starting API Gateway on port 8000..."
-cd api_gateway && python3 manage.py runserver 8000 &
-
 # Start User Service
 echo "Starting User Service on port 8001..."
 cd user_service && python3 manage.py runserver 8001 &

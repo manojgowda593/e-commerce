@@ -60,30 +60,29 @@ Each service runs in its own container with:
 - Independent Dockerfile
 - Separate deployment
 - Own Kubernetes Service for internal communication
-- Environment variables for service discovery
+- No need for service-to-service environment variables (Emissary handles routing)
 
 ## Service Discovery in EKS
 
-Services communicate using Kubernetes DNS:
+Services are discovered by Kubernetes DNS:
 - `http://user-service:8001` - User Service
 - `http://product-service:8002` - Product Service
 - `http://order-service:8003` - Order Service
-- `http://api-gateway:8000` - API Gateway
 - `http://ui-service:8080` - UI Service
+
+Emissary routes requests to these services based on URL paths.
 
 ## Environment Variables for EKS
 
-### API Gateway
+### All Services (Simplified)
 ```bash
-USER_SERVICE_URL=http://user-service:8001
-PRODUCT_SERVICE_URL=http://product-service:8002
-ORDER_SERVICE_URL=http://order-service:8003
+DEBUG=False
+SECRET_KEY=your-secret-key
+ALLOWED_HOSTS=*
+PORT=8001  # or 8002, 8003, 8080 depending on service
 ```
 
-### UI Service
-```bash
-API_GATEWAY_URL=http://api-gateway:8000
-```
+No need for service URLs since Emissary handles routing!
 
 ## Docker Images
 
@@ -93,25 +92,22 @@ Build and push images to ECR (Elastic Container Registry):
 # Login to ECR
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
 
-# Build images
+# Build images (4 services, no API Gateway)
 docker build -t user-service ./user_service
 docker build -t product-service ./product_service
 docker build -t order-service ./order_service
-docker build -t api-gateway ./api_gateway
 docker build -t ui-service ./ui_service
 
 # Tag images
 docker tag user-service:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/user-service:latest
 docker tag product-service:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/product-service:latest
 docker tag order-service:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/order-service:latest
-docker tag api-gateway:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/api-gateway:latest
 docker tag ui-service:latest <account-id>.dkr.ecr.us-east-1.amazonaws.com/ui-service:latest
 
 # Push images
 docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/user-service:latest
 docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/product-service:latest
 docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/order-service:latest
-docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/api-gateway:latest
 docker push <account-id>.dkr.ecr.us-east-1.amazonaws.com/ui-service:latest
 ```
 
@@ -146,8 +142,9 @@ Add health check endpoints to each service for Kubernetes liveness/readiness pro
 ## Networking
 
 - All services communicate within the same Kubernetes cluster
-- Only UI Service is exposed externally via Load Balancer
-- API Gateway and microservices use ClusterIP services
+- Emissary handles all external traffic routing
+- All services use ClusterIP (internal only)
+- Emissary is exposed via ALB/LoadBalancer
 - No database required (in-memory storage)
 
 ## Security Considerations
